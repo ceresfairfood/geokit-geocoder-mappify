@@ -31,16 +31,16 @@ module Geokit
         addr = json["result"]
         loc = new_loc
         loc.success = true
-        loc.street_number = [addr["numberFirst"], addr["numberLast"]].join("-")
-        loc.street_name = titleize([addr["streetName"], addr["streetType"]].join(" "))
-        loc.instance_variable_set(:@street_address, [loc.street_number, loc.street_name].join(" "))
+        loc.street_number = [addr["numberFirst"], addr["numberLast"]].compact.join("-")
+        loc.street_name = titleize([addr["streetName"], addr["streetType"]].compact.join(" "))
+        loc.instance_variable_set(:@street_address, [loc.street_number, loc.street_name].compact.join(" "))
         loc.city = titleize(addr["suburb"])
         loc.state_code = addr["state"]
         loc.state_name = STATE_NAMES[addr["state"]]
         loc.zip = addr["postCode"]
         loc.country_code = "AU"
         loc.country = "Australia"
-        loc.full_address = [loc.street_address, [loc.city, loc.state_code, loc.zip].join(" "), loc.country].join(", ")
+        loc.full_address = [loc.street_address, [loc.city, loc.state_code, loc.zip].compact.join(" "), loc.country].compact.join(", ")
         loc.precision = "building"
         loc.lat, loc.lng = addr["location"]["lat"], addr["location"]["lon"]
         loc
