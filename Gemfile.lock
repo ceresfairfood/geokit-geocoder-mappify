@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    geokit-geocoder-mappify (0.1.0)
+    geokit-geocoder-mappify (0.0.1)
       geokit (~> 1.11)
 
 GEM
