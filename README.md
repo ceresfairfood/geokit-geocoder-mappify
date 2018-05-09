@@ -1,4 +1,4 @@
-# Geokit::Geocoder::Mappify
+# Geokit::Geocoders::Mappify
 
 This is a gem to allow Geokit to work with the API from [mappify.io](https://mappify.io). It monkey-patches the Geokit code to allow both POST and GET requests.
 It currently only supports geocoding. Reverse geocoding may be added at a later date

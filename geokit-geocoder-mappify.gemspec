@@ -4,7 +4,7 @@ require "geokit/geocoders/mappify/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "geokit-geocoder-mappify"
-  spec.version       = Geokit::Geocoder::Mappify::VERSION
+  spec.version       = Geokit::Geocoders::Mappify::VERSION
   spec.authors       = ["Andy Palmer"]
   spec.email         = ["andy@riverglide.com"]
 
