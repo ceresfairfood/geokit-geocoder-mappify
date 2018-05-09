@@ -1,5 +1,5 @@
 require "bundler/setup"
-require "geokit/geocoder/mappify"
+require "geokit/geocoders/mappify"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
