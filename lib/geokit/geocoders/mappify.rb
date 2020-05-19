@@ -11,7 +11,7 @@ module Geokit
       private
 
       def self.do_geocode(address, options = {})
-        payload = {streetAddress: address}
+        payload = {streetAddress: address}.merge(options)
         payload[:apiKey] = api_key
         process(:json, "https://mappify.io/api/rpc/address/geocode/", payload: payload)
       end
