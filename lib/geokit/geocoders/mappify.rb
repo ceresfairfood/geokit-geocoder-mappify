@@ -6,12 +6,13 @@ require "monkeypatch/geokit/geocoders"
 module Geokit
   module Geocoders
     class MappifyGeocoder < Geocoder
-      config :api_key
+      config :api_key, :logging
 
       private
 
       def self.do_geocode(address, options = {})
         payload = {streetAddress: address}.merge(options)
+        puts '[Mappify] Payload: ' + payload.to_s if logging
         payload[:apiKey] = api_key
         process(:json, "https://mappify.io/api/rpc/address/geocode/", payload: payload)
       end
@@ -28,6 +29,7 @@ module Geokit
       }
 
       def self.parse_json(json)
+        puts '[Mappify] Response: ' + json.to_json if logging
         addr = json["result"]
         loc = new_loc
         loc.success = true

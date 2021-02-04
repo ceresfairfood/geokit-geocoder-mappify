@@ -17,7 +17,8 @@ And then execute:
 
 ## Configuration
 
-The geocoder has one configuration parameter `api_key`, that can be set to your Mappify API key. If this is not specified, the anonymous tier will allow up to 100 requests/day
+* `api_key` can be set to your Mappify API key. If this is not specified, the anonymous tier will allow up to 100 requests/day
+* `logging` if true, all HTTP requests and responses will be logged for debugging
 
 ## Contributing
 
