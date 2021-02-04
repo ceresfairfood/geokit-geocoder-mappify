@@ -12,7 +12,7 @@ module Geokit
 
       def self.do_geocode(address, options = {})
         payload = {streetAddress: address}.merge(options)
-        puts '[Mappify] Payload: ' + payload.to_s if logging
+        logger.debug { '[Mappify] Payload: ' + payload.to_s }
         payload[:apiKey] = api_key
         process(:json, "https://mappify.io/api/rpc/address/geocode/", payload: payload)
       end
@@ -29,7 +29,7 @@ module Geokit
       }
 
       def self.parse_json(json)
-        puts '[Mappify] Response: ' + json.to_json if logging
+        logger.debug { '[Mappify] Response: ' + json.to_json }
         addr = json["result"]
         loc = new_loc
         loc.success = true
