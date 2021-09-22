@@ -1,6 +1,6 @@
 # Geokit::Geocoders::Mappify
 
-This is a gem to allow Geokit to work with the API from [mappify.io](https://mappify.io). It monkey-patches the Geokit code to allow both POST and GET requests, and provide debug logging. 
+This is a gem to allow [Geokit](https://github.com/geokit/geokit) to work with the API from [mappify.io](https://mappify.io). It monkey-patches the Geokit code to allow both POST and GET requests, and provide debug logging.
 It currently only supports geocoding. Reverse geocoding may be added at a later date.
 
 ## Installation
@@ -19,9 +19,9 @@ And then execute:
 
 The geocoder has one configuration parameter `api_key`, that can be set to your Mappify API key. If this is not specified, the anonymous tier will allow up to 100 requests/day
 
-## Usage
+## Logging
 
-As per GeoKit, but with additional logger option, eg:
+An additional logger option may be passed for debugging, eg:
 
 ```ruby
   Geokit::Geocoders::MappifyGeocoder.geocode(
@@ -39,6 +39,19 @@ As per GeoKit, but with additional logger option, eg:
   def self.logger
     @@my_logger ||= Logger.new("#{Rails.root}/log/geocoding_service.log")
   end
+```
+
+This will produce three lines per request, for example:
+```
+D, [2021-09-22T16:03:00.730908 #80988] DEBUG -- : [MAPPIFY PAYLOAD]  {:streetAddress=>"20 WATER RD", :postCode=>"3072", :suburb=>"PRESTON", :state=>"VIC", :apiKey=>"664602ba-6827-4313-80c6-53b6ef9cac4b"}
+D, [2021-09-22T16:03:00.908996 #80988] DEBUG -- : [MAPPIFY RESPONSE] {"type":"streetAddressRecord","result":{"buildingName":null,"numberFirst":20,"numberFirstPrefix":null,"numberFirstSuffix":null,"numberLast":null,"numberLastPrefix":null,"numberLastSuffix":null,"streetName":"WATER","streetType":"ROAD","streetSuffixCode":null,"suburb":"PRESTON","state":"VIC","postCode":"3072","location":{"lat":-37.742924,"lon":145.034029},"streetAddress":"20 WATER ROAD, PRESTON VIC 3072"},"confidence":1}
+D, [2021-09-22T16:03:00.910692 #80988] DEBUG -- : [MAPPIFY SUMMARY]  "20 WATER RD, PRESTON VIC 3072","20 WATER ROAD, PRESTON VIC 3072",streetAddressRecord,1,-37.742924,145.034029
+```
+
+The summary line can be exported to CSV like so:
+```
+echo "Sent address, Received streetAddress, type, confidence, lat, lon" > log/geocoding_summary.csv
+grep '\[MAPPIFY SUMMARY\]' log/geocoding_service.log | grep -o '".*' | uniq >> log/geocoding_summary.csv
 ```
 
 ## Contributing
