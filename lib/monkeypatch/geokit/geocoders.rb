@@ -2,7 +2,7 @@ module Geokit
   module Geocoders
     class Geocoder
       def self.process(format, url, *args, payload: nil)
-        logger = payload.delete(:logger)
+        logger = payload&.delete(:logger)
         logger&.debug { '[MAPPIFY PAYLOAD]  ' + payload.to_s }
 
         res = call_geocoder_service(url, payload: payload)
@@ -29,12 +29,12 @@ module Geokit
       def self.log_summary(payload, body)
         response = JSON.parse(body)
         [
-          "#{payload[:streetAddress]}, #{payload[:suburb]} #{payload[:state]} #{payload[:postCode]}",
-          response['result']['streetAddress'],
-          response['type'],
-          response['confidence'],
-          response['result']['location']['lat'],
-          response['result']['location']['lon'],
+          !payload.nil? ? "#{payload[:streetAddress]}, #{payload[:suburb]} #{payload[:state]} #{payload[:postCode]}" : "",
+          response.dig('result', 'streetAddress'),
+          response.dig('type'),
+          response.dig('confidence'),
+          response.dig('result', 'location', 'lat'),
+          response.dig('result', 'location', 'lon'),
         ]
       end
     end

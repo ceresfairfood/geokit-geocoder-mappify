@@ -1,4 +1,6 @@
 require "bundler/setup"
+require 'rspec'
+require 'pry'
 require "geokit/geocoders/mappify"
 
 RSpec.configure do |config|
